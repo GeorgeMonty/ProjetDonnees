@@ -52,7 +52,7 @@ class Jeux_donnees:
                         is_new = False
                 if is_new:
                     new_variables.append(i)
-            
+            ######################################################################################################
             colnum1 = None
             for col in range(len(variables1)):
                 if variables1[col] == variable_jointure:
