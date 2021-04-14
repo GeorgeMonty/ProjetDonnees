@@ -1,5 +1,6 @@
 import csv
 import json
+import donnees as dn
 
 class Jeux_donnees:
     
@@ -24,12 +25,29 @@ class Jeux_donnees:
                 covidreader = csv.reader(csvfile, delimiter=';')
                 for row in covidreader :
                     data.append(row)
-            return data
+            #renommer le variable reg à numReg
+            variables = data[0]
+            for i in range(len(variables)):
+                if variables[i] == 'reg':
+                    variables[i] = 'numReg'
+                #les variables jour, numreg et dep sont str, les autres doit être int
+                #on inclure variable dep à cause des departements 2A et 2B
+                if variables[i] == 'jour':
+                    pass
+                elif variables[i] == 'nomReg':
+                    pass
+                elif variables[i] == 'dep':
+                    pass
+                else:
+                    for entry in data[1:]:
+                        entry[i] = int(entry[i])
+                
+            return dn.Donnees(data,'csv')
         
         elif self.__type_fichier == 'json':
             with open(folder + filename) as json_file :
                 data = json.load(json_file)
-            return data
+            return dn.Donnees(data, 'json')
         
         else:
             raise Exception("Type de fichier inconnu")
