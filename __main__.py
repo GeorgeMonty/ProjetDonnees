@@ -4,18 +4,7 @@ import donnees as dn
 test = dn.Donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/donnees-hospitalieres-etablissements-covid19-2021-03-03-17h03.csv')
 test3 = dn.Donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/covid-hospit-incid-reg-2021-03-03-17h20.csv')
 
-
-x=test.fenetrage('2020-04-16','2020-06-08')
-data=test.donnees
-data3=test3.donnees
 x=test.jointure(test3)
-x
-x[0]
-data[0]
-data[1]
-
-data3[0]
-data3[1]
 
 
 
@@ -28,3 +17,9 @@ x=small.jointure(small2)
 x
 small.donnees[0]
 small2.donnees[0]
+
+import donnees as dn
+essai = dn.Donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/donnees-hospitalieres-classe-age-covid19-2021-03-03-17h03.csv')
+essai2 = dn.Donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/covid-hospit-incid-reg-2021-03-03-17h20.csv')
+
+jointure = essai.jointure(essai2)
