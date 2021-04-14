@@ -29,10 +29,11 @@ class Donnees(jd.Jeux_donnees):
             if variables_partages == []:
                 raise Exception('Aucun variables partagées entre ces jeux de données')
                 
-            variables_partages = tuple(variables_partages)            
+            variables_partages = tuple(variables_partages)
+                        
             ######################################################################################################
        
-            #creer une liste des nouvelles variables du jeu de données
+            #creer une nouvelle liste des variables du jeu de données
             new_variables = list(variables_partages)
             for i in variables1:
                 is_new = True
@@ -49,12 +50,12 @@ class Donnees(jd.Jeux_donnees):
                         is_new = False
                 if is_new:
                     new_variables.append(i)
+                    
             ######################################################################################################
            
             new_data = [new_variables]
             step = 0
             for entry1 in data1[1:]:
-                step = step + 1
                 new_entry1 = []
                 for new_var in new_variables:
                     check = False
@@ -65,26 +66,35 @@ class Donnees(jd.Jeux_donnees):
                     if check == False:
                         new_entry1.append(None)
                 new_entry1 = tuple(new_entry1)
-                for entry2 in data2:
+                for entry2 in data2[1:]:
                     new_entry2 = list(new_entry1)
                     
                     for var_par in variables_partages:
                         for j in range(len(variables2)):
                             if var_par == variables2[j]:
-                                
+                                checking = True
                                 for k in range(len(new_variables)):
                                     if new_variables[k] == var_par:
-                                        if entry2[j] == new_entry2[k]:
-                                            for l in range(len(new_variables)):
-                                                for m in range(len(variables2)):
-                                                    if new_variables[l] == variables2[m]:
-                                                        if new_entry2[l] == None:
-                                                            new_entry2.insert(l,entry2[m])
-                                                            new_entry2.pop(l+1)
-                        new_data.append(new_entry2)
-                print('step :' + str(step))
-                if step == 200:
-                    break
+                                        if entry2[j] != new_entry2[k]:
+                                            checking = False
+                    if checking == True:    
+                        for l in range(len(new_variables)):
+                            for m in range(len(variables2)):
+                                if new_variables[l] == variables2[m]:
+                                    if new_entry2[l] == None:
+                                        new_entry2.insert(l,entry2[m])
+                                        new_entry2.pop(l+1)
+                        is_repeat = False
+                        for repeat in new_data:
+                            if new_entry2 == repeat:
+                                is_repeat = True
+                        if is_repeat == False:
+                            new_data.append(new_entry2)
+                            print('step :' + str(step))            
+                            step = step + 1
+                            if step >= 20000:
+                                return new_data
+            print('done')             
             return new_data       
             
         elif self.__type_fichier == 'json':
