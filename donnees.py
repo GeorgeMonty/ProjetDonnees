@@ -143,7 +143,21 @@ class Donnees:
             for ele in sorted(colnums, reverse = True): 
                 del entry[ele]
 
-        
+    def aggregation_spatial(self,depreg,liste_nums):
+        if depreg not in ['reg','dep']:
+            raise Exception('On ne peut que faire l\'aggregation spatial sur les variables \'reg\' ou \'dep\'')
+        else:
+            if depreg == 'reg':
+                depreg = 'numReg'
+            colnum = None
+            for var in range(len(self.donnees[0])):
+                if self.donnees[0][var] == depreg:
+                    colnum = var
+                    
+            for entry in self.donnees[1:]:
+                if entry[colnum] not in liste_nums:
+                    self.donnees.remove(entry)
+            
         
         
         
