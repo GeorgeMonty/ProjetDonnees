@@ -3,14 +3,75 @@ import json
 import donnees as dn
 
 class Jeux_donnees:
+    """
+    Une classe pour importer les jeux de donnees des fichiers .csv et .json
+       
+    Attributs
+    ---------
+    lien_fichier : str
+                    le lien du fichier qui contient ce jeu de données
+                    il faut séparer ce lien avec les / par exemple 'C:/documents/nom_fichier.csv'
     
+    __type_fichier : str
+                    le format du fichier i.e. 'csv' ou 'json'
+    
+    Exemples
+    --------
+    >>> jd = Jeux_donnees('C:/documents/file1.csv')
+    >>> donnees = jd.importer()
+   
+    """
     
     def __init__(self,lien_fichier):
+        """<Constructeur>
+        Création d'un nouvelle jeu de données
+        
+
+        Parametres
+        ----------
+        lien_fichier : str
+                    le lien du fichier qui contient ce jeu de données
+                    il faut séparer ce lien avec les / par exemple 'C:/documents/nom_fichier.csv'
+
+        Exemples
+        -------
+        >>> jd = Jeux_donnees('C:/documents/file1.csv')
+
+        """
         self.lien_fichier = lien_fichier
         self.__type_fichier = lien_fichier.split('.')[-1]
         
         
     def importer(self):
+        """
+        Importer les donnees de ce jeux de donnees comme au forme de classe Donnees.
+        
+        On ne peut que importer les fichiers .csv et .json
+        Les fichiers .csv sont presentés comme une list des lists et les fichiers 
+        .json une dictionnaire des dictionnaires
+        
+        Parametres
+        ----------
+        None
+        
+        Returns
+        -------
+        Donnees
+            Les donnees de ce jeu de donnees.
+            
+        Exemples
+        --------
+        >>> jd = Jeux_donnees('C:/documents/file1.csv')
+        >>> donnees = jd.importer()
+        
+        >>> jd2 = Jeux_donnees('C:/documents/file2.json')
+        >>> donnees2 = jd2.importer()
+        
+        >>> jd3 = Jeux_donnees('C:/documents/file3.txt')
+        >>> donnees3 = jd3.importer()
+        Exception: Type de fichier inconnu
+        
+        """
         path = self.lien_fichier.split('/')
         filename = path[-1]
         

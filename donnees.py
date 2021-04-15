@@ -2,6 +2,17 @@
 class Donnees:
     
     def __init__(self, donnees,type_fichier):
+        """<Constructeur>
+        
+        Parametres
+        ----------
+        donnees
+            Les donnees du jeu de données.
+        type_fichier : str
+            Le format du fichier d'origin du jeux de donnees.
+
+
+        """
         self.donnees = donnees
         self.__type_fichier = type_fichier
         
@@ -157,6 +168,12 @@ class Donnees:
             for entry in self.donnees[1:]:
                 if entry[colnum] not in liste_nums:
                     self.donnees.remove(entry)
+                    
+                    
+    def pendant_vacance(self,vacance):
+        import jeux_donnees as jd
+        data_vacances = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
+        
             
         
         
