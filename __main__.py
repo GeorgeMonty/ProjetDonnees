@@ -8,7 +8,7 @@ data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/d
 data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
 
 
-data1.selection_variables(['jour','incid_rea'])
+data1.selection_variables(['numReg','jour','incid_rea'])
 
 jointure = data4.jointure(data5)
 

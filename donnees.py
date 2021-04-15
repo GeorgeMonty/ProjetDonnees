@@ -89,9 +89,10 @@ class Donnees:
                             if is_repeat == False:
                                 new_data.append(new_entry2)
                                 step = step + 1
-                                print('step :' + str(step))
-                                if step >= 200:
-                                    return Donnees(new_data,'csv')
+                                if step % 25 == 0:
+                                    print('step :' + str(step))
+                                ####if step >= 200:
+                                    ####return Donnees(new_data,'csv')
                 print('All rows done')             
                 return Donnees(new_data,'csv')       
             else:
@@ -131,21 +132,31 @@ class Donnees:
                         data.remove(entry)
     
     def selection_variables(self,variables):
-        
+        colnums=[]
         all_variables = self.donnees[0]
-        colnums = []
         
-        for var1 in variables:
-            i=0
-            for var2 in all_variables:
-                if var1 == var2:
-                    colnums.append(i)
-                    i=i+1
-        colnums.sort(reverse=True)
+        for i in range(len(all_variables)):
+            if all_variables[i] not in variables:
+                colnums.append(i)
+                
         for entry in self.donnees:
-            j=0
-            for item in entry:
-                if j not in colnums:
-                    entry.remove(item)
-                j=j+1
+            for ele in sorted(colnums, reverse = True): 
+                del entry[ele]
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
