@@ -32,11 +32,14 @@ class Jeux_donnees:
                     variables[i] = 'numReg'
                 #les variables jour, numreg et dep sont str, les autres doit être int
                 #on inclure variable dep à cause des departements 2A et 2B
+                #on inclure numReg aussi pour rendre plus intuitif le fonction d'aggregation spatial
                 if variables[i] == 'jour':
                     pass
                 elif variables[i] == 'nomReg':
                     pass
                 elif variables[i] == 'dep':
+                    pass
+                elif variables[i] == 'numReg':
                     pass
                 else:
                     for entry in data[1:]:
