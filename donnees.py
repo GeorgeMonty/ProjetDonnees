@@ -170,24 +170,99 @@ class Donnees:
                     self.donnees.remove(entry)
                     
                     
-    def pendant_vacance(self,vacance):
-        import jeux_donnees as jd
-        data_vacances = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
+    def pendant_vacance(self,vacance,donnees_vacances):
         
-            
+        data_vacances = donnees_vacances.donnees
+        data = self.donnees
+        variables = self.donnees[0]
+        col_jour = None
+        col_dep = None
+        null_entry = False
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
+        for i in range(len(variables)):
+            if variables[i] == 'jour':
+                col_jour = i
+                print ('col_jour =' + str(col_jour))
+            elif variables[i] == 'dep':
+                col_dep = i
+                print ('col_dep =' + str(col_dep))
+        if col_jour == None:
+            raise Exception('Variable \'jour\' non-trouvée')
+        elif col_dep == None:
+            raise Exception('Variable \'dep\' non-trouvée')
+        for entry in data[1:]:
+            date = entry[col_jour].split('-')
+            for zones in data_vacances['Academie']:
+                if entry[col_dep] == zones['Code_Dpt']:
+                    zone = zones['Zone']
+                    print(zone)
+                    for vac in data_vacances['Calendrier']:
+                        if vac['Zone'] == zone:
+                            if vac['Description'] == vacance:
+                                date_fin = vac['Fin'].split('-')
+                                date_debut = vac['Debut'].split('-')
+                                if date[0] in [date_debut[0],date_fin[0]]:
+                                    if date_fin == None:
+                                        null_entry = True
+                                        data.remove(entry)
+                                        print('removed1')
+                                        break
+                                    else:
+                                        if int(date[0]) == int(date_debut[0]):
+                                            if int(date[1]) < int(date_debut[1]):
+                                                data.remove(entry)
+                                                print('removed2')
+                                                break
+                                            elif int(date[1]) == int(date_debut[1]):
+                                                if int(date[2]) < int(date_debut[2]):
+                                                    data.remove(entry)
+                                                    print('removed3')
+                                                    break
+                                        if int(date[0]) == int(date_fin[0]):
+                                            if int(date[1]) > int(date_fin[1]):
+                                                data.remove(entry)
+                                                print('removed4')
+                                                break
+                                            elif int(date[1]) == int(date_fin[1]):
+                                                if int(date[2]) > int(date_fin[2]):
+                                                    data.remove(entry)
+                                                    print('removed5')
+                                                    break
+                                        
+                                       
+        if null_entry == True:
+            print('Note: Au moins un entry a été enlevé parce que le date du fin de ce vacance n\'est pas connu')
+        else:
+            print('Finished without Nones')
+                   
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               

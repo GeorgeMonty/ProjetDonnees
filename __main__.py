@@ -22,3 +22,11 @@ data1.selection_variables(['jour','incid_rea'])
 
 jointure = data4.jointure(data5)
 
+holidays = holidays.donnees['Calendrier']
+
+for entry in holidays:
+    if entry['Description'] != None:
+        holidays.remove(entry)
+        
+
+data3.pendant_vacance('Vacances de NoÃ«l',holidays)
