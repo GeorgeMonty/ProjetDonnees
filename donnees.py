@@ -191,6 +191,7 @@ class Donnees:
         elif col_dep == None:
             raise Exception('Variable \'dep\' non-trouvée')
         for entry in data[1:]:
+            remove = True
             date = entry[col_jour].split('-')
             for zones in data_vacances['Academie']:
                 if entry[col_dep] == zones['Code_Dpt']:
@@ -199,37 +200,44 @@ class Donnees:
                     for vac in data_vacances['Calendrier']:
                         if vac['Zone'] == zone:
                             if vac['Description'] == vacance:
-                                date_fin = vac['Fin'].split('-')
+                                date_fin = vac['Fin']
+                                if date_fin == None:
+                                    date_fin = [date_fin]
+                                else:
+                                    date_fin = date_fin.split('-')
                                 date_debut = vac['Debut'].split('-')
                                 if date[0] in [date_debut[0],date_fin[0]]:
-                                    if date_fin == None:
+                                    if date_fin == [None]:
                                         null_entry = True
-                                        data.remove(entry)
-                                        print('removed1')
-                                        break
                                     else:
-                                        if int(date[0]) == int(date_debut[0]):
-                                            if int(date[1]) < int(date_debut[1]):
-                                                data.remove(entry)
-                                                print('removed2')
-                                                break
-                                            elif int(date[1]) == int(date_debut[1]):
-                                                if int(date[2]) < int(date_debut[2]):
-                                                    data.remove(entry)
-                                                    print('removed3')
-                                                    break
-                                        if int(date[0]) == int(date_fin[0]):
-                                            if int(date[1]) > int(date_fin[1]):
-                                                data.remove(entry)
-                                                print('removed4')
-                                                break
-                                            elif int(date[1]) == int(date_fin[1]):
-                                                if int(date[2]) > int(date_fin[2]):
-                                                    data.remove(entry)
-                                                    print('removed5')
-                                                    break
-                                        
-                                       
+                                         if date_debut[0] == date_fin[0]: #les années sont les mêmes
+                                             if date_debut[1] == date_fin[1]: #les mois sont le même
+                                                 if int(date[2]) in range(int(date_debut[2]),int(date_fin[2])):
+                                                     remove = False
+                                             else: #mois differents
+                                                 if int(date[1]) in range(int(date_debut[1])+1,int(date_fin[1])):
+                                                     remove = False
+                                                 elif int(date[1]) == int(date_debut[1]):
+                                                     if int(date[2]) in range(int(date_debut[2]),32):
+                                                         remove = False
+                                                 elif int(date[1]) == int(date_fin[1]):
+                                                     if int(date[2]) in range(0,int(date_debut[2])+1):
+                                                         remove = False
+                                         else: #années differents
+                                             if int(date[0]) == int(date_debut[0]):
+                                                 if int(date[1]) in range(int(date_debut[1])+1,13):
+                                                     remove = False
+                                                 elif int(date[1]) == int(date_debut[1]):
+                                                     if int(date[2]) in range(int(date_debut[2]),32):
+                                                         remove = False
+                                             elif int(date[0]) == int(date_fin[0]):            
+                                                 if int(date[1]) in range(0,int(date_fin[1])):
+                                                     remove = False
+                                                 elif int(date[1]) == int(date_fin[1]):
+                                                     if int(date[2]) in range(0,int(date_debut[2])+1):
+                                                         remove = False       
+            if remove == True:
+                data.remove(entry)                           
         if null_entry == True:
             print('Note: Au moins un entry a été enlevé parce que le date du fin de ce vacance n\'est pas connu')
         else:
