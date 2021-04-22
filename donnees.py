@@ -10,13 +10,22 @@ class Donnees:
             Les donnees du jeu de données.
         type_fichier : str
             Le format du fichier d'origin du jeux de donnees.
-
-
+        
+        Exemples
+        --------
+        >>> d1 = Donnees(['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', '44','12']],'csv')
+        >>> d1.variables
+        ['jour', 'nomReg', 'numReg', 'incid_rea','dc']
+        >>> d1.donnees
+        [['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', '44','12']]        
+        
         """
         self.donnees = donnees
         self.__type_fichier = type_fichier
+        if self.__type_fichier == 'csv':
+            self.variables = self.donnees[0]
     
-    def testjointure(self,donnee2):
+    def oldjointure(self,donnee2): ### NE MARCHE PAS
     
         if self.__type_fichier == 'csv':
             if donnee2.__type_fichier == 'csv':
@@ -112,13 +121,42 @@ class Donnees:
     
     
     def jointure(self,donnee2):
+        """
+        Une fonction pour joindre 2 jeux des données.
+        Attention: Cette fonction est assez lent avec les jeux de données trop grandes
+            donc il est recommandé que vous utiliser les autres fonctions avant de 
+            faire un jointure pour reduire le taille de vos données
+
+        Parameters
+        ----------
+        donnee2 : Donnees
+            Le jeu des données qu'on veut joindre.
+
+        Returns
+        -------
+        new_donnees : Donnees
+            Le nouveaux jeu des données.
+            
+        Exemples
+        --------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>>d2 = Jeux_donnees('C:/documents/file2.csv').importer()
+        >>>d1.donnees
+        [['jour', 'numReg', 'incid_rea'],['2000-08-29', '01', '44']]
+        >>> d2.donnees
+        [['jour', 'numReg','dc'],['2000-08-29', '01','12']]
+        >>>d3 = d1.jointure(d2)
+        >>>d3.donnees
+        [['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', '44','12']]
+        
+        """
         if self.__type_fichier == 'csv':
             if donnee2.__type_fichier == 'csv':
                 step=0
                 data1 = self.donnees
                 data2 = donnee2.donnees
-                variables1 = data1[0]
-                variables2 = data2[0]
+                variables1 = tuple(data1[0])
+                variables2 = tuple(data2[0])
                 variables_partages = []
                 for i in variables1:
                     est_partage = False
@@ -130,7 +168,6 @@ class Donnees:
                 tuple_variables = ('jour','dep','numReg','nomReg','sexe','cl_age90','hosp','rea','rad','dc','nb','incid_hosp','incid_rea','incid_rad','incid_dc')
                 new_variables = list(tuple_variables)
                 new_data = [new_variables]
-                print(variables_partages)
                 for entry1 in data1[1:]:
                     step=step+1
                     new_entry=[]
@@ -140,8 +177,7 @@ class Donnees:
                         for i in range(len(variables1)):
                             if variables1[i] == new_variables[j]:
                                 new_entry[j]=entry1[i]
-                    new_data.append(new_entry) 
-                    print('data1 step:' + str(step))
+                    new_data.append(new_entry)
                 step = 0 
                 final_data = [new_variables]
                 for join_entry in new_data[1:]:
@@ -162,10 +198,13 @@ class Donnees:
                                 for m in range(len(variables2)):
                                     if variables2[m] == new_variables[l]:
                                         final_entry[l]=entry2[m]            
-                            final_data.append(final_entry)                
-                    print('data2 step:' + str(step))
+                            final_data.append(final_entry)
                                     
                 new_donnees = Donnees(final_data,'csv')
+                final_variables = list(variables1)
+                for var in variables2:
+                    final_variables.append(var)
+                new_donnees.selection_variables(final_variables)
                 print("Finished")
                 return new_donnees                          
             else:
@@ -174,6 +213,42 @@ class Donnees:
             raise Exception("On ne peut que faire les jointures sur les fichiers. csv")
     
     def fenetrage(self,date_debut='0000-00-00',date_fin='999999-999-999'):
+        """
+        Effacer les éléments d'un jeu des données qui ne sont pas entre les 
+        dates données
+
+        Parameters
+        ----------
+        date_debut : str, optional
+            Le premier date de votre fenêtrage (inclus).
+            Le date dait être du forme 'aaaa-mm-jj' e.g.'2020-08-01'.
+            Si on ne donne pas un date début le programme suppose un 
+            date de '0000-00-00'.
+        date_fin : str, optional
+            Le final date de votre fenêtrage (inclus).
+            Le date dait être du forme 'aaaa-mm-jj' e.g.'2020-08-01'.
+            Si on ne donne pas un date fin le programme suppose un 
+            date de '999999-999-999'.
+
+        Returns
+        -------
+        None.
+
+        Exemples
+        -------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>> d1.fenetrage('2020-03-29','2020-04-29')
+        
+        >>> d2 = Jeux_donnees('C:/documents/file2.csv').importer()
+        >>> d2.fenetrage('2021-01-01') 
+        #cela va effacer tous les éléments de d2 qui s'est passé avant le 2021-01-01
+        
+        >>> d3 = Jeux_donnees('C:/documents/file3.csv').importer()
+        >>> d3.fenetrage(date_fin='2020-08-29') 
+        #cela va effacer tous les éléments de d3 qui s'est passé après le 2020-08-29
+        
+
+        """
         data = self.donnees
         date_debut = date_debut.split('-')
         date_fin = date_fin.split('-')
@@ -204,6 +279,28 @@ class Donnees:
                         data.remove(entry)
     
     def selection_variables(self,variables):
+        """
+        Choisir et effacer les variables (les colonnes) d'un jeu des données
+
+        Parameters
+        ----------
+        variables : iterable(str)
+            Une liste des variables que vous voulez garder dans le jeu de données.
+
+        Returns
+        -------
+        None.
+    
+        Exemples
+        --------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>> d1.variables
+        ['jour', 'nomReg', 'numReg', 'incid_rea','dc']
+        >>> d1.selection_variables(['jour','numReg','incid_rea'])
+        >>> d1.variables
+        ['jour', 'numReg', 'incid_rea']
+
+        """
         colnums=[]
         all_variables = self.donnees[0]
         
@@ -232,6 +329,31 @@ class Donnees:
                     
                     
     def pendant_vacance(self,vacance,donnees_vacances):
+        """
+        Effacer les éléments d'un jeu des données qui ne sont pas pendant une
+        vacance scolaire donnée.
+        Attention: si le date du fin de la vacance choisi n'est pas connu pour une zone academique,
+            cette vacance est ignoré.
+        
+        Parameters
+        ----------
+        vacance : str
+            le nom de la vacance.
+        donnees_vacances : Donnees
+            Un jeu des données d'un .json fichier qui contient les vacances et les zone scolaire
+            des departements.
+
+        Returns
+        -------
+        None.
+        
+        Exemples
+        --------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>> donnees_vacances = Jeux_donnees('C:/documents/file_vacances.json').importer
+        >>> d1.pendant_vacance('Vacances de Printemps', donnees_vacances)
+        
+        """
         
         data_vacances = donnees_vacances.donnees
         data = self.donnees
@@ -300,9 +422,8 @@ class Donnees:
             if remove == True:
                 data.remove(entry)                           
         if null_entry == True:
-            print('Note: Au moins un entry a été enlevé parce que le date du fin de ce vacance n\'est pas connu')
-        else:
-            print('Finished without Nones')
+            print('Note: Au moins un entry a été enlevé parce que le date du fin de ce vacance n\'est pas connu' +
+                  ' dans une zone academique')
                    
                
                
