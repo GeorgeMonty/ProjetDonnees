@@ -15,8 +15,8 @@ class Donnees:
         """
         self.donnees = donnees
         self.__type_fichier = type_fichier
-        
-    def jointure(self,donnee2):
+    
+    def testjointure(self,donnee2):
     
         if self.__type_fichier == 'csv':
             if donnee2.__type_fichier == 'csv':
@@ -90,9 +90,8 @@ class Donnees:
                             for l in range(len(new_variables)):
                                 for m in range(len(variables2)):
                                     if new_variables[l] == variables2[m]:
-                                        if new_entry2[l] == None:
-                                            new_entry2.insert(l,entry2[m])
-                                            new_entry2.pop(l+1)
+                                        new_entry2.insert(l,entry2[m])
+                                        new_entry2.pop(l+1)
                             is_repeat = False
                             for repeat in new_data:
                                 if new_entry2 == repeat:
@@ -110,8 +109,74 @@ class Donnees:
                 raise Exception("On ne peut que faire les jointures sur les fichiers. csv")                
         else:
             raise Exception("On ne peut que faire les jointures sur les fichiers. csv")
-        
-        
+    
+    
+    def jointure(self,donnee2):
+        if self.__type_fichier == 'csv':
+            if donnee2.__type_fichier == 'csv':
+                step=0
+                data1 = self.donnees
+                data2 = donnee2.donnees
+                variables1 = data1[0]
+                variables2 = data2[0]
+                variables_partages = []
+                for i in variables1:
+                    est_partage = False
+                    for j in variables2:
+                        if i == j:
+                            est_partage = True
+                    if est_partage == True:
+                        variables_partages.append(i)
+                tuple_variables = ('jour','dep','numReg','nomReg','sexe','cl_age90','hosp','rea','rad','dc','nb','incid_hosp','incid_rea','incid_rad','incid_dc')
+                new_variables = list(tuple_variables)
+                for var in new_variables:
+                    if var not in variables1:
+                        if var not in variables2:
+                            new_variables.remove(var)
+                new_data = [new_variables]
+                print(variables_partages)
+                for entry1 in data1[1:]:
+                    step=step+1
+                    new_entry=[]
+                    for variable in new_variables:
+                        new_entry.append(None)
+                    for j in range(len(new_variables)):
+                        for i in range(len(variables1)):
+                            if variables1[i] == new_variables[j]:
+                                new_entry[j]=entry1[i]
+                    new_data.append(new_entry) 
+                    print('data1 step:' + str(step))
+                step = 0 
+                final_data = [new_variables]
+                for join_entry in new_data[1:]:
+                    step = step + 1
+                    for entry2 in data2[1:]:
+                        final_entry = tuple(join_entry)
+                        final_entry = list(final_entry)
+                        join = True
+                        for var_par in variables_partages:
+                            for j in range(len(variables2)):
+                                if variables2[j] == var_par:
+                                    for k in range(len(new_variables)):
+                                        if new_variables[k] == var_par:
+                                            if entry2[j] != join_entry[k]:
+                                                join = False
+                        if join == True:
+                            for l in range(len(new_variables)):
+                                for m in range(len(variables2)):
+                                    if variables2[m] == new_variables[l]:
+                                        final_entry[l]=entry2[m]            
+                        final_data.append(final_entry)                
+                    print('data2 step:' + str(step))
+                                    
+                new_donnees = Donnees(final_data,'csv')
+                print("Finished")
+                return new_donnees                          
+            else:
+                raise Exception("On ne peut que faire les jointures sur les fichiers. csv")
+        else:
+            raise Exception("On ne peut que faire les jointures sur les fichiers. csv")
+    
     def fenetrage(self,date_debut='0000-00-00',date_fin='999999-999-999'):
         data = self.donnees
         date_debut = date_debut.split('-')

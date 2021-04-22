@@ -30,3 +30,11 @@ for entry in holidays:
         
 
 data3.pendant_vacance('Vacances de NoÃ«l',holidays)
+
+test = data1.jointure(data2)
+
+data = tuple(test.donnees)
+data = list(data)
+for entry in data[1:]:
+    if entry[2] != "84":
+        data.remove(entry)
