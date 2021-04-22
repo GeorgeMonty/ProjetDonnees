@@ -129,10 +129,6 @@ class Donnees:
                         variables_partages.append(i)
                 tuple_variables = ('jour','dep','numReg','nomReg','sexe','cl_age90','hosp','rea','rad','dc','nb','incid_hosp','incid_rea','incid_rad','incid_dc')
                 new_variables = list(tuple_variables)
-                for var in new_variables:
-                    if var not in variables1:
-                        if var not in variables2:
-                            new_variables.remove(var)
                 new_data = [new_variables]
                 print(variables_partages)
                 for entry1 in data1[1:]:
@@ -166,7 +162,7 @@ class Donnees:
                                 for m in range(len(variables2)):
                                     if variables2[m] == new_variables[l]:
                                         final_entry[l]=entry2[m]            
-                        final_data.append(final_entry)                
+                            final_data.append(final_entry)                
                     print('data2 step:' + str(step))
                                     
                 new_donnees = Donnees(final_data,'csv')
