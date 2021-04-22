@@ -33,8 +33,8 @@ data3.pendant_vacance('Vacances de NoÃ«l',holidays)
 
 
 
-data1.fenetrage("2020-03-01","2020-03-20")
-data2.fenetrage("2020-03-01","2020-03-20")
+data1.fenetrage("2020-03-19","2020-03-26")
+data2.fenetrage("2020-03-19","2020-03-26")
 
 test = data1.jointure(data2)
 
