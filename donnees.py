@@ -1,6 +1,27 @@
 
 class Donnees:
+    """
+    Une classe des jeux des données importer
     
+    Vous pouvez utiliser certains fonctions sur les Donnees pour ajouter et effacer certains
+    variables et éléments.
+       
+    Attributs
+    ---------
+    donnees : iterable
+                    les données importés de ce jeu des données. Si les données sont d'une fichiers
+                    .csv  ils sont presentés comme une list des lists et les données sont d'une 
+                    fichier .json ils sont presentés comme une dictionnaire des dictionnaires
+    
+    __type_fichier : str
+                    le format du fichier i.e. 'csv' ou 'json'
+    
+    Exemples
+    --------
+    >>> jd = Jeux_donnees('C:/documents/file1.csv')
+    >>> donnees = jd.importer()
+   
+    """    
     def __init__(self, donnees,type_fichier):
         """<Constructeur>
         
@@ -24,6 +45,8 @@ class Donnees:
         self.__type_fichier = type_fichier
         if self.__type_fichier == 'csv':
             self.variables = self.donnees[0]
+        elif self.__type_fichier == 'json':
+            self.variables = ['Calendrier', 'Academie']
     
     def oldjointure(self,donnee2): ### NE MARCHE PAS
     
@@ -123,11 +146,11 @@ class Donnees:
     def jointure(self,donnee2):
         """
         Une fonction pour joindre 2 jeux des données.
-        Attention: Cette fonction est assez lent avec les jeux de données trop grandes
+        ATTENTION: Cette fonction est assez lent avec les jeux de données trop grandes
             donc il est recommandé que vous utiliser les autres fonctions avant de 
             faire un jointure pour reduire le taille de vos données
 
-        Parameters
+        Parametres
         ----------
         donnee2 : Donnees
             Le jeu des données qu'on veut joindre.
@@ -142,12 +165,12 @@ class Donnees:
         >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
         >>>d2 = Jeux_donnees('C:/documents/file2.csv').importer()
         >>>d1.donnees
-        [['jour', 'numReg', 'incid_rea'],['2000-08-29', '01', '44']]
+        [['jour', 'numReg', 'incid_rea'],['2000-08-29', '01', 44]]
         >>> d2.donnees
-        [['jour', 'numReg','dc'],['2000-08-29', '01','12']]
+        [['jour', 'numReg','dc'],['2000-08-29', '01',12]]
         >>>d3 = d1.jointure(d2)
         >>>d3.donnees
-        [['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', '44','12']]
+        [['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', 44, 12]]
         
         """
         if self.__type_fichier == 'csv':
@@ -217,7 +240,7 @@ class Donnees:
         Effacer les éléments d'un jeu des données qui ne sont pas entre les 
         dates données
 
-        Parameters
+        Parametres
         ----------
         date_debut : str, optional
             Le premier date de votre fenêtrage (inclus).
@@ -282,7 +305,7 @@ class Donnees:
         """
         Choisir et effacer les variables (les colonnes) d'un jeu des données
 
-        Parameters
+        Parametres
         ----------
         variables : iterable(str)
             Une liste des variables que vous voulez garder dans le jeu de données.
@@ -313,6 +336,33 @@ class Donnees:
                 del entry[ele]
 
     def aggregation_spatial(self,depreg,liste_nums):
+        """
+        Ne garder que les éléments d'un jeu des données qui sont d'une liste des régions ou 
+        départements données
+
+        Parametres
+        ----------
+        depreg : str: 'reg' / 'dep'
+            Si vous voulez faire l'aggregation spatial sur les régions il faut entrer 'reg'
+            sinon, si vous voulez utiliser les départements il faut entrer 'dep'.
+        liste_nums : iterable(str)
+            Une liste des numéros des régions/départements que vous voulez garder
+            ATTENTION: les numéros doit être du format str e.g ['01','02','03'].
+
+        Returns
+        -------
+        None.
+        
+        Exemples
+        --------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>> d1.donnees
+        [['jour', 'numReg', 'incid_rea'],['2000-08-29', '01', 44],['2000-08-29', '02', 6]]
+        >>> d1.aggregation_spatial('reg',['02'])
+        >>> d1.donnees
+        [['jour', 'numReg', 'incid_rea'],['2000-08-29', '02', 6]]
+
+        """
         if depreg not in ['reg','dep']:
             raise Exception('On ne peut que faire l\'aggregation spatial sur les variables \'reg\' ou \'dep\'')
         else:
@@ -332,10 +382,10 @@ class Donnees:
         """
         Effacer les éléments d'un jeu des données qui ne sont pas pendant une
         vacance scolaire donnée.
-        Attention: si le date du fin de la vacance choisi n'est pas connu pour une zone academique,
+        ATTENTION: si le date du fin de la vacance choisi n'est pas connu pour une zone academique,
             cette vacance est ignoré.
         
-        Parameters
+        Parametres
         ----------
         vacance : str
             le nom de la vacance.
@@ -422,7 +472,7 @@ class Donnees:
             if remove == True:
                 data.remove(entry)                           
         if null_entry == True:
-            print('Note: Au moins un entry a été enlevé parce que le date du fin de ce vacance n\'est pas connu' +
+            print('Note: Au moins un entry pourrait avoir été enlevé parce que le date du fin de ce vacance n\'est pas connu' +
                   ' dans une zone academique')
                    
                
