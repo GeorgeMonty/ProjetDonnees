@@ -188,7 +188,7 @@ class Donnees:
                             est_partage = True
                     if est_partage == True:
                         variables_partages.append(i)
-                tuple_variables = ('jour','dep','numReg','nomReg','sexe','cl_age90','hosp','rea','rad','dc','nb','incid_hosp','incid_rea','incid_rad','incid_dc')
+                tuple_variables = ('jour','dep','Zone','numReg','nomReg','sexe','cl_age90','hosp','rea','rad','dc','nb','incid_hosp','incid_rea','incid_rad','incid_dc')
                 new_variables = list(tuple_variables)
                 new_data = [new_variables]
                 for entry1 in data1[1:]:
@@ -335,16 +335,17 @@ class Donnees:
             for ele in sorted(colnums, reverse = True): 
                 del entry[ele]
 
-    def aggregation_spatial(self,depreg,liste_nums):
+    def aggregation_spatial(self,dep_numReg_Zone,liste_nums):
         """
         Ne garder que les éléments d'un jeu des données qui sont d'une liste des régions ou 
         départements données
 
         Parametres
         ----------
-        depreg : str: 'reg' / 'dep'
-            Si vous voulez faire l'aggregation spatial sur les régions il faut entrer 'reg'
-            sinon, si vous voulez utiliser les départements il faut entrer 'dep'.
+        dep_numReg_Zone : str: 'numReg' / 'dep' / 'Zone'
+            Si vous voulez faire l'aggregation spatial sur les régions il faut entrer 'numreg'
+            sinon, si vous voulez utiliser les départements il faut entrer 'dep'
+            et pour les zones academiques il faut entrer 'Zone.
         liste_nums : iterable(str)
             Une liste des numéros des régions/départements que vous voulez garder
             ATTENTION: les numéros doit être du format str e.g ['01','02','03'].
@@ -363,16 +364,19 @@ class Donnees:
         [['jour', 'numReg', 'incid_rea'],['2000-08-29', '02', 6]]
 
         """
-        if depreg not in ['reg','dep']:
-            raise Exception('On ne peut que faire l\'aggregation spatial sur les variables \'reg\' ou \'dep\'')
+        if dep_numReg_Zone not in ['reg','numReg','dep','Zone','zone']:
+            raise Exception('On ne peut que faire l\'aggregation spatial sur les variables \'numReg\', \'dep\' ou \'Zone\'')
         else:
-            if depreg == 'reg':
-                depreg = 'numReg'
+            if dep_numReg_Zone == 'reg':
+                dep_numReg_Zone = 'numReg'
+            elif dep_numReg_Zone == 'zone':
+                dep_numReg_Zone = 'Zone'
             colnum = None
             for var in range(len(self.donnees[0])):
-                if self.donnees[0][var] == depreg:
+                if self.variables[var] == dep_numReg_Zone:
                     colnum = var
-                    
+            if colnum == None:
+                raise Exception('Variable ' + dep_numReg_Zone + ' non-trouvée')
             for entry in self.donnees[1:]:
                 if entry[colnum] not in liste_nums:
                     self.donnees.remove(entry)
@@ -429,7 +433,6 @@ class Donnees:
             for zones in data_vacances['Academie']:
                 if entry[col_dep] == zones['Code_Dpt']:
                     zone = zones['Zone']
-                    print(zone)
                     for vac in data_vacances['Calendrier']:
                         if vac['Zone'] == zone:
                             if vac['Description'] == vacance:
@@ -476,7 +479,52 @@ class Donnees:
                   ' dans une zone academique')
                    
                
-               
+    def ajouter_zones_acad(self,donnees_zones):
+        """
+        Ajouter une nouvelle colonne au jeu de données Zone qui est les zones academiques
+        ATTENTION: Il faut savoir la code du departement de vos données pour afficher les
+                  zones academiques
+        
+
+        Parameters
+        ----------
+        donnees_zones : Donnees
+            Un jeu des données d'un .json fichier qui contient les zones scolaires 
+            des departements.
+
+        Returns
+        -------
+        None.
+
+        Exemples
+        --------
+        >>> d1 = Jeux_donnees('C:/documents/file1.csv').importer()
+        >>> d1.donnees
+        [['jour', 'dep', 'incid_rea'],['2000-08-29', '01', 44],['2000-08-29', '02', 6]]        
+        >>> zones = Jeux_donnees('C:/documents/file_zones.json').importer()
+        >>> d1.ajouter_zones_acad(zones)
+        >>> d1.donnees
+        [['jour', 'dep', 'incid_rea', 'Zone'],['2000-08-29', '02', 6, 'Zone A']]
+
+        """
+        data_zones = donnees_zones.donnees
+        data = self.donnees
+        variables = self.donnees[0]
+        col_dep = None
+        variables.append('Zone')
+        
+        for i in range(len(variables)):
+            if variables[i] == 'dep':
+                col_dep = i
+        if col_dep == None:
+            raise Exception('Variable \'dep\' non-trouvée')
+        for entry in data[1:]:
+            for zones in data_zones['Academie']:
+                if entry[col_dep] == zones['Code_Dpt']:
+                    zone = zones['Zone']
+                    entry.append(zone)
+        
+                   
                
                
                
