@@ -48,7 +48,7 @@ class Jeux_donnees:
         
         On ne peut que importer les fichiers .csv et .json
         Les fichiers .csv sont presentés comme une list des lists et les fichiers 
-        .json une dictionnaire des dictionnaires
+        .json un dictionnaire des dictionnaires
         
         Parametres
         ----------

@@ -11,8 +11,12 @@ class Donnees:
     donnees : iterable
                     les données importés de ce jeu des données. Si les données sont d'une fichiers
                     .csv  ils sont presentés comme une list des lists et les données sont d'une 
-                    fichier .json ils sont presentés comme une dictionnaire des dictionnaires
+                    fichier .json ils sont presentés comme un dictionnaire des dictionnaires
     
+    varaibles : iterable
+                    les variables (les colonnes) de ce jeu des données i.e. le premier ligne
+                    des données
+                    
     __type_fichier : str
                     le format du fichier i.e. 'csv' ou 'json'
     
@@ -47,6 +51,8 @@ class Donnees:
             self.variables = self.donnees[0]
         elif self.__type_fichier == 'json':
             self.variables = ['Calendrier', 'Academie']
+        else:
+            raise Exception("Un objet de la Classe Donnees doit venir d\'un fichier .csv ou .json")
     
     def oldjointure(self,donnee2): ### NE MARCHE PAS
     
