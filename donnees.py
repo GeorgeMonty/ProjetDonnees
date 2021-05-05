@@ -1,4 +1,4 @@
-
+import numpy as np 
 class Donnees:
     """
     Une classe des jeux des données importer
@@ -53,101 +53,7 @@ class Donnees:
             self.variables = ['Calendrier', 'Academie']
         else:
             raise Exception("Un objet de la Classe Donnees doit venir d\'un fichier .csv ou .json")
-    
-    def oldjointure(self,donnee2): ### NE MARCHE PAS
-    
-        if self.__type_fichier == 'csv':
-            if donnee2.__type_fichier == 'csv':
-                data1 = self.donnees
-                data2 = donnee2.donnees
-                variables1 = data1[0]
-                variables2 = data2[0]
-                
-                ######################################################################################################
-    
-                #creer une liste des variables partagées entre les jeux de données
-                variables_partages = []
-                for i in variables1:
-                    est_partage = False
-                    for j in variables2:
-                        if i == j:
-                            est_partage = True
-                    if est_partage == True:
-                        variables_partages.append(i)
-                if variables_partages == []:
-                    raise Exception('Aucun variables partagées entre ces jeux de données')
-                    
-                variables_partages = tuple(variables_partages)
-                            
-                ######################################################################################################
-           
-                #creer une nouvelle liste des variables du jeu de données
-                new_variables = list(variables_partages)
-                for i in variables1:
-                    is_new = True
-                    for j in variables_partages:
-                        if i == j:
-                            is_new = False
-                    if is_new:
-                        new_variables.append(i)
-                        
-                for i in variables2:
-                    is_new = True
-                    for j in variables_partages:
-                        if i == j:
-                            is_new = False
-                    if is_new:
-                        new_variables.append(i)
-                        
-                ######################################################################################################
-               
-                new_data = [new_variables]
-                step = 0
-                for entry1 in data1[1:]:
-                    new_entry1 = []
-                    for new_var in new_variables:
-                        check = False
-                        for i in range(len(variables1)):
-                            if new_var == variables1[i]:
-                                new_entry1.append(entry1[i])
-                                check = True
-                        if check == False:
-                            new_entry1.append(None)
-                    new_entry1 = tuple(new_entry1)
-                    for entry2 in data2[1:]:
-                        new_entry2 = list(new_entry1)
-                        checking = True
-                        for var_par in variables_partages:
-                            for j in range(len(variables2)):
-                                if var_par == variables2[j]:
-                                    for k in range(len(new_variables)):
-                                        if new_variables[k] == var_par:
-                                            if entry2[j] != new_entry2[k]:
-                                                checking = False
-                        if checking == True:    
-                            for l in range(len(new_variables)):
-                                for m in range(len(variables2)):
-                                    if new_variables[l] == variables2[m]:
-                                        new_entry2.insert(l,entry2[m])
-                                        new_entry2.pop(l+1)
-                            is_repeat = False
-                            for repeat in new_data:
-                                if new_entry2 == repeat:
-                                    is_repeat = True
-                            if is_repeat == False:
-                                new_data.append(new_entry2)
-                                step = step + 1
-                                if step % 25 == 0:
-                                    print('step :' + str(step))
-                                ####if step >= 200:
-                                    ####return Donnees(new_data,'csv')
-                print('All rows done')             
-                return Donnees(new_data,'csv')       
-            else:
-                raise Exception("On ne peut que faire les jointures sur les fichiers. csv")                
-        else:
-            raise Exception("On ne peut que faire les jointures sur les fichiers. csv")
-    
+     
     
     def jointure(self,donnee2):
         """
@@ -261,7 +167,8 @@ class Donnees:
 
         Returns
         -------
-        None.
+        Donnees
+            Le nouveau jeu de données
 
         Exemples
         -------
@@ -278,7 +185,8 @@ class Donnees:
         
 
         """
-        data = self.donnees
+        data = tuple(self.donnees)
+        data = list(data)
         date_debut = date_debut.split('-')
         date_fin = date_fin.split('-')
         variables = data[0]
@@ -306,6 +214,42 @@ class Donnees:
                 elif int(date[1]) == int(date_fin[1]):
                     if int(date[2]) > int (date_fin[2]):
                         data.remove(entry)
+        return Donnees(data,"csv")                
+    
+    def fenetrage_numpy(self,var_qual, dep_numReg_Zone,date_debut="00-00-0000",date_fin="99-99-99999"):
+        data = self.fenetrage(date_debut,date_fin)
+        data = data.selection_variables(["jour",dep_numReg_Zone ,var_qual])
+        variables = data.variables
+        data = data.donnees[1:]
+        for i in range(len(variables)):
+            if variables[i]== 'jour':
+                col_jour = i
+            elif variables[i] == dep_numReg_Zone:
+                col_dep = i
+            elif variables[i] == var_qual:
+                col_var = i
+        liste_jours = []
+        liste_deps = []
+        for element in data:
+            jour = element[col_jour]
+            dep = element[col_dep]
+            if jour not in liste_jours:
+                liste_jours.append(jour)
+            if dep not in liste_deps:
+                liste_deps.append(dep)
+        array_numpy = []
+        for dep in liste_deps:
+            new_ligne = []
+            for entry in data:
+                for jour in liste_jours:
+                    if entry[col_jour] == jour:
+                        if entry[col_dep] == dep:
+                            new_ligne.append(entry[col_var])
+            array_numpy.append(new_ligne)                
+        return np.array(array_numpy)
+            
+        
+        
     
     def selection_variables(self,variables):
         """
@@ -318,7 +262,8 @@ class Donnees:
 
         Returns
         -------
-        None.
+        Donnees.
+            Une nouvelle jeu de données avec les variables souhaités
     
         Exemples
         --------
@@ -332,15 +277,20 @@ class Donnees:
         """
         colnums=[]
         all_variables = self.donnees[0]
+        data = []
         
         for i in range(len(all_variables)):
-            if all_variables[i] not in variables:
+            if all_variables[i] in variables:
                 colnums.append(i)
                 
         for entry in self.donnees:
-            for ele in sorted(colnums, reverse = True): 
-                del entry[ele]
-
+            liste = []
+            for ele in sorted(colnums):
+                liste.append(entry[ele])
+            data.append(liste)    
+        return Donnees(data,"csv")
+                
+        
     def aggregation_spatial(self,dep_numReg_Zone,liste_nums):
         """
         Ne garder que les éléments d'un jeu des données qui sont d'une liste des régions ou 
@@ -370,6 +320,8 @@ class Donnees:
         [['jour', 'numReg', 'incid_rea'],['2000-08-29', '02', 6]]
 
         """
+        data = tuple(self.donnees)
+        data = list(data)
         if dep_numReg_Zone not in ['reg','numReg','dep','Zone','zone']:
             raise Exception('On ne peut que faire l\'aggregation spatial sur les variables \'numReg\', \'dep\' ou \'Zone\'')
         else:
@@ -378,15 +330,15 @@ class Donnees:
             elif dep_numReg_Zone == 'zone':
                 dep_numReg_Zone = 'Zone'
             colnum = None
-            for var in range(len(self.donnees[0])):
+            for var in range(len(self.variables)):
                 if self.variables[var] == dep_numReg_Zone:
                     colnum = var
             if colnum == None:
                 raise Exception('Variable ' + dep_numReg_Zone + ' non-trouvée')
-            for entry in self.donnees[1:]:
+            for entry in data[1:]:
                 if entry[colnum] not in liste_nums:
-                    self.donnees.remove(entry)
-                    
+                    data.remove(entry)
+        return Donnees(data,"csv")            
                     
     def pendant_vacance(self,vacance,donnees_vacances):
         """
@@ -405,7 +357,8 @@ class Donnees:
 
         Returns
         -------
-        None.
+        Donnees 
+            Le nouveau jeu de données
         
         Exemples
         --------
@@ -416,8 +369,9 @@ class Donnees:
         """
         
         data_vacances = donnees_vacances.donnees
-        data = self.donnees
-        variables = self.donnees[0]
+        data = tuple(self.donnees)
+        data = list(data)
+        variables = self.variables
         col_jour = None
         col_dep = None
         null_entry = False
@@ -483,7 +437,7 @@ class Donnees:
         if null_entry == True:
             print('Note: Au moins un entry pourrait avoir été enlevé parce que le date du fin de ce vacance n\'est pas connu' +
                   ' dans une zone academique')
-                   
+        return Donnees(data,"csv")           
                
     def ajouter_zones_acad(self,donnees_zones):
         """
@@ -500,7 +454,8 @@ class Donnees:
 
         Returns
         -------
-        None.
+        Donnees.
+            Le nouveau jeu de données
 
         Exemples
         --------
@@ -514,10 +469,12 @@ class Donnees:
 
         """
         data_zones = donnees_zones.donnees
-        data = self.donnees
-        variables = self.donnees[0]
+        data = tuple(self.donnees)
+        data = list(data)
+        variables = tuple(self.variables)
+        variables = list(variables)
         col_dep = None
-        variables.append('Zone')
+        data[0].append('Zone')
         
         for i in range(len(variables)):
             if variables[i] == 'dep':
@@ -529,11 +486,44 @@ class Donnees:
                 if entry[col_dep] == zones['Code_Dpt']:
                     zone = zones['Zone']
                     entry.append(zone)
-        
-                   
-               
-               
-               
+        return Donnees(data, "csv")
+    def choisir_sexe(self,femme_homme):
+        """
+        Enlever les lignes des resultats par sexe (2 = femmes, 1 = hommes, 0 = hommes et femmes).
+        Il faut entrer le sexe que l'on veut garder
+
+        Parameters
+        ----------
+        femme_homme : int
+            Le sexe qu'on veut garder (2 = Femmes, 1 = Hommes, 0 = Hommes et Femmes).
+
+        Returns
+        -------
+        Donnees
+            Le nouveau jeu de données
+
+        """
+        data = tuple(self.donnees)
+        data = list(data)
+        if femme_homme in ["femme","Femme","F","f","2"]:
+            femme_homme = 2
+        elif femme_homme in ["homme","Homme","H","h","1"]:
+            femme_homme = 1
+        elif femme_homme in ["H/F","h/f","tous","0"]:
+            femme_homme = 0
+        colnum = None
+        for var in range(len(self.donnees[0])):
+            if self.variables[var] == "sexe":
+                colnum = var
+        if colnum == None:
+            raise Exception('Varaible \'sexe\' non-trouvée')
+        i=1
+        for entry in data[1:]:
+            if entry[colnum] != femme_homme:
+                data.remove(entry)
+            print("ligne: " + str(i))
+            i=i+1
+        return Donnees(data,"csv")    
                
                
                

@@ -8,6 +8,8 @@ data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/d
 data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
 holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
 
+test_data = data1
+test = data1.selection_variables(["jour","numReg","incid_rea"])
 
 data1.variables
 data2.variables
@@ -15,10 +17,10 @@ data3.variables
 data4.variables
 data5.variables
 
-data4.aggregation_spatial('dep', ['36','01'])
+test = data4.aggregation_spatial('dep', ['36','01'])
 data2.aggregation_spatial('reg', ['01','28'])
 
-data1.selection_variables(['jour','incid_rea'])
+x=data1.selection_variables(['jour','incid_rea'])
 
 jointure = data4.jointure(data5)
 
@@ -29,11 +31,11 @@ for entry in holidays:
         holidays.remove(entry)
         
 
-data3.pendant_vacance('Vacances de NoÃ«l',holidays)
+test = data3.pendant_vacance('Vacances de NoÃ«l',holidays)
 
 
 
-data3.fenetrage("2020-03-19","2020-03-26")
+data3.fenetrage("2019-01-01","2024-12-31")
 data4.fenetrage("2020-03-19","2020-03-26")
 
 test = data3.jointure(data4)
@@ -44,4 +46,9 @@ for entry in data[1:]:
     if entry[2] != "84":
         data.remove(entry)
         
-data3.ajouter_zones_acad(holidays)
+test = data3.ajouter_zones_acad(holidays)
+
+data3.choisir_sexe(2)
+data3 = data3.choisir_sexe('femme')
+
+test = data3.fenetrage_numpy('hosp', 'dep','2020-08-29','2020-08-31')
