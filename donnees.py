@@ -69,7 +69,7 @@ class Donnees:
 
         Returns
         -------
-        new_donnees : Donnees
+        Donnees
             Le nouveaux jeu des données.
             
         Exemples
@@ -216,40 +216,6 @@ class Donnees:
                         data.remove(entry)
         return Donnees(data,"csv")                
     
-    def fenetrage_numpy(self,var_qual, dep_numReg_Zone,date_debut="00-00-0000",date_fin="99-99-99999"):
-        data = self.fenetrage(date_debut,date_fin)
-        data = data.selection_variables(["jour",dep_numReg_Zone ,var_qual])
-        variables = data.variables
-        data = data.donnees[1:]
-        for i in range(len(variables)):
-            if variables[i]== 'jour':
-                col_jour = i
-            elif variables[i] == dep_numReg_Zone:
-                col_dep = i
-            elif variables[i] == var_qual:
-                col_var = i
-        liste_jours = []
-        liste_deps = []
-        for element in data:
-            jour = element[col_jour]
-            dep = element[col_dep]
-            if jour not in liste_jours:
-                liste_jours.append(jour)
-            if dep not in liste_deps:
-                liste_deps.append(dep)
-        array_numpy = []
-        for dep in liste_deps:
-            new_ligne = []
-            for entry in data:
-                for jour in liste_jours:
-                    if entry[col_jour] == jour:
-                        if entry[col_dep] == dep:
-                            new_ligne.append(entry[col_var])
-            array_numpy.append(new_ligne)                
-        return np.array(array_numpy)
-            
-        
-        
     
     def selection_variables(self,variables):
         """
@@ -525,6 +491,68 @@ class Donnees:
             i=i+1
         return Donnees(data,"csv")    
                
+    def fenetrage_numpy(self,var_qual, dep_numReg_Zone,date_debut="00-00-0000",date_fin="99-99-99999"):
+        """
+        
+
+        Parameters
+        ----------
+        var_qual : str
+            Le variable qualitative l'on considère.
+        dep_numReg_Zone : str : 'numReg' / 'dep' / 'Zone'
+            Si vous voulez faire l'aggregation spatial sur les régions il faut entrer 'numreg'
+            sinon, si vous voulez utiliser les départements il faut entrer 'dep'
+            et pour les zones academiques il faut entrer 'Zone.
+        date_debut : str, optional
+            Le premier date de votre fenêtrage (inclus).
+            Le date dait être du forme 'aaaa-mm-jj' e.g.'2020-08-01'.
+            Si on ne donne pas un date début le programme suppose un 
+            date de '0000-00-00'.
+        date_fin : str, optional
+            Le final date de votre fenêtrage (inclus).
+            Le date dait être du forme 'aaaa-mm-jj' e.g.'2020-08-01'.
+            Si on ne donne pas un date fin le programme suppose un 
+            date de '999999-999-999'.
+
+        Returns
+        -------
+        Donnees
+            Le nouveau jeu de données.
+
+        """
+        data = self.fenetrage(date_debut,date_fin)
+        data = data.selection_variables(["jour",dep_numReg_Zone ,var_qual])
+        variables = data.variables
+        data = data.donnees[1:]
+        for i in range(len(variables)):
+            if variables[i]== 'jour':
+                col_jour = i
+            elif variables[i] == dep_numReg_Zone:
+                col_dep = i
+            elif variables[i] == var_qual:
+                col_var = i
+        liste_jours = []
+        liste_deps = []
+        for element in data:
+            jour = element[col_jour]
+            dep = element[col_dep]
+            if jour not in liste_jours:
+                liste_jours.append(jour)
+            if dep not in liste_deps:
+                liste_deps.append(dep)
+        array_numpy = []
+        for dep in liste_deps:
+            new_ligne = []
+            for entry in data:
+                for jour in liste_jours:
+                    if entry[col_jour] == jour:
+                        if entry[col_dep] == dep:
+                            new_ligne.append(entry[col_var])
+            array_numpy.append(new_ligne)                
+        return np.array(array_numpy)
+            
+        
+        
                
                
                
