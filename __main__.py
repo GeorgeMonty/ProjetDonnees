@@ -8,8 +8,11 @@ data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/d
 data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
 holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
 
-test_data = data1
+
 test = data1.selection_variables(["jour","numReg","incid_rea"])
+test.exporter("C:/Users/georg/OneDrive/Documents/Projet données/code/test_export.csv")
+
+imported = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test_export.csv').importer()
 
 data1.variables
 data2.variables
