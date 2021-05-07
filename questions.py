@@ -8,8 +8,11 @@ import jeux_donnees as jd
 import numpy as np
 import donnees as dn
 import kmeans as km
-import stat as st
+import statistique as st
 import graphique as gr
+
+
+
 
 data1= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data1.csv').importer()
 data2= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data2.csv').importer()
@@ -31,7 +34,6 @@ data_hosp = data5.selection_variables('incid_hosp')
 somme = 0
 for elem in data_hosp.donnees[1:]:
     somme = somme + elem[0]
-
 print("Nb total d'hospitalisations: " + str(somme))
 
 #Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
@@ -58,7 +60,7 @@ test=data5.fenetrage("2020-03-29", "2020-04-04")
 
 test_hosp = test.selection_variables(["incid_hosp"])
 
-x=st.moyenne_colonne(test_hosp.donnees[1:])
+x=stat.moyenne_colonne(test_hosp.donnees[1:])
 
 
 test2=data5.fenetrage("2020-04-05", "2020-04-12")
@@ -67,15 +69,17 @@ test_hosp2 = test2.selection_variables(["incid_hosp"])
 
 x2=stat.moyenne_colonne(test_hosp2.donnees[1:])
 
+print(" la moyenne a changer de " + str(x[0]) + " à " + str(x2[0]))
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
 stat = st.Statistique()
+k=3
 
 janv = data4.fenetrage_numpy('nb', 'dep',date_debut="2021-01-01",date_fin="2021-01-31")
 
 gliss = stat.moyenne_glissante_tableau(janv, 7)
 
-kmeans = km.KMeans(np.asarray(gliss), 3)
+kmeans = km.KMeans(np.asarray(gliss), k)
 
 classification = kmeans.clustering(np.asarray(gliss))
 
@@ -84,11 +88,10 @@ classification = kmeans.clustering(np.asarray(gliss))
 rean_touss = data5.fenetrage("2020-11-08","2020-11-15")
 rean_touss = rean_touss.selection_variables("incid_rea")
 
-
 somme = 0
 for elem in rean_touss.donnees[1:]:
     somme = somme + elem[0]
-print(somme)
+print("Il y avait {} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme))
 
 
 
