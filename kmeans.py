@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from sklearn.datasets import make_blobs
+
 
   
     
@@ -88,10 +88,3 @@ class KMeans:
         classification = self.prediction_classe(clusters, X)
         return classification
 
-if __name__ == "__main__":
-    np.random.seed(10)
-    num_clusters = 3
-    X, _ = make_blobs(n_samples=1000, n_features=2, centers=num_clusters)
-
-    Kmeans = KMeans(X, num_clusters)
-    classification = Kmeans.clustering(X)
