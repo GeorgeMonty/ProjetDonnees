@@ -1,7 +1,8 @@
 import numpy as np
+import jeux_donnees as jd
 
 class Statistique:
-    
+
     def moyenne(self, X):
         somme = 0
         effectif = len(X)
@@ -77,7 +78,38 @@ class Statistique:
             table_moyenne.append(self.moyenne_mobile(x,fenetre))
         return table_moyenne                
 
-test = Statistique() 
+test = [[0], [1], [0], [3], [1], [3], [0], [0], [0]]
 
-y = [[1, 2, 3, 6, 98, 65, 32], [2, 4, 6, 5, 9, 23, 200], [10, 5, 9, 90, 76, 34, 2000]]  
-   
+stat=Statistique('sup')
+
+x=stat.moyenne_colonne(test)
+
+data1= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data1.csv').importer()
+data2= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data2.csv').importer()
+data3= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data3.csv').importer()
+data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data4.csv').importer()
+data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
+holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
+
+test=data5.fenetrage("2020-03-29", "2020-04-04")
+
+test_hosp = test.selection_variables(["incid_hosp"])
+
+x=stat.moyenne_colonne(test_hosp.donnees[1:])
+
+
+test2=data5.fenetrage("2020-04-05", "2020-04-12")
+
+test_hosp2 = test2.selection_variables(["incid_hosp"])
+
+x2=stat.moyenne_colonne(test_hosp2.donnees[1:])
+
+
+
+test.donnees[1:10]
+stat=Statistique()
+
+janv = data4.fenetrage_numpy('nb', 'dep',date_debut="2021-01-01",date_fin="2021-01-31")
+
+gliss = stat.moyenne_glissante_tableau(janv, 7)
+

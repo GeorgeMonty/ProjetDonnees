@@ -2,13 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-
-  
-    
-    
-
-
 class KMeans:
+    
     def __init__(self, X, nombre_classe):
         self.K = nombre_classe
         self.max_iterations = 100
@@ -87,4 +82,8 @@ class KMeans:
             centres = self.nouveau_centres(clusters, X)
         classification = self.prediction_classe(clusters, X)
         return classification
+
+
+
+
 

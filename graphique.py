@@ -17,6 +17,3 @@ class Graphique:
         plt.ylabel(self.nom_ordonnee) 
         plt.show()   
     
-test = Graphique(abs, ord, 'x', 'y', 'titre') 
-
-Graphique.affichage_graphique(test)
