@@ -1,4 +1,6 @@
-import numpy as np 
+import numpy as np
+import csv
+
 class Donnees:
     """
     Une classe des jeux des données importer
@@ -551,8 +553,32 @@ class Donnees:
             array_numpy.append(new_ligne)                
         return np.array(array_numpy)
             
+    def exporter(self,lien_fichier, delimiter = ";"):
+        """
+        Exporter un jeu de données comme une fichier csv
+
+        Parameters
+        ----------
+        lien_fichier : str
+            le lien du fichier qui contient ce jeu de données
+                    il faut séparer ce lien avec les / par exemple 'C:/documents/nom_fichier.csv'
+        delimiter : str, optional
+            Le seperateur du fichier csv. Par défaut, cela soit ";".
+
+        Returns
+        -------
+        None.
         
-        
+        Exemples
+        --------
+        data1.exporter("C:/Users/Documents/.csv")
+
+        """
+
+        with open(lien_fichier, 'w', newline='') as csvfile:
+            covidwriter = csv.writer(csvfile, delimiter=delimiter,quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for ligne in self.donnees:
+                covidwriter.writerow(ligne)
                
                
                
