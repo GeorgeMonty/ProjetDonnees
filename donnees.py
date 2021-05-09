@@ -3,7 +3,7 @@ import csv
 
 class Donnees:
     """
-    Une classe des jeux des données importer
+    Une classe des jeux des données importés
     
     Vous pouvez utiliser certains fonctions sur les Donnees pour ajouter et effacer certains
     variables et éléments.
@@ -15,8 +15,8 @@ class Donnees:
                     .csv  ils sont presentés comme une list des lists et les données sont d'une 
                     fichier .json ils sont presentés comme un dictionnaire des dictionnaires
     
-    varaibles : iterable
-                    les variables (les colonnes) de ce jeu des données i.e. le premier ligne
+    variables : iterable
+                    les variables (les colonnes) de ce jeu des données i.e. la première ligne
                     des données
                     
     __type_fichier : str
