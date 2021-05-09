@@ -6,7 +6,7 @@ class KMeans:
     
     def __init__(self, X, nombre_classe):
         self.K = nombre_classe
-        self.max_iterations = 100
+        self.max_iterations = 1000
         self.individu = X.shape[0]
         self.variable = X.shape[1]
             
