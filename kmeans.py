@@ -39,7 +39,7 @@ class KMeans:
         self.variable = X.shape[1]
             
     def moyenne(self,Y):
-                """
+        """
         Méthode permettant de calculer la moyenne d'une liste Python
         
         Parametres
@@ -59,7 +59,7 @@ class KMeans:
         return moyenne 
     
     def moyenne_ligne(self,X):
-                """
+        """
         Méthode permettant de calculer la moyenne suivant les lignes d'une liste de liste
         
         Parametres
@@ -77,7 +77,7 @@ class KMeans:
         return np.asarray(resu)
     
     def moyenne_colonne(self,X):
-                """
+        """
         Méthode permettant de calculer la moyenne suivant les colonnes d'une liste de liste
         
         Parametres
@@ -95,7 +95,7 @@ class KMeans:
         return resu   
       
     def liste_distance(self, X, Y):
-                """
+        """
         Méthode permettant de calculer la liste des distances d'une liste (un individu du jeu de données) à un ensemble de points 
         
         Parametres
@@ -115,7 +115,7 @@ class KMeans:
         return liste      
 
     def initialisation_centres(self, X):
-                """
+        """
         Méthode permettant d'initialiser les centres aléatoirement 
         
         Parametres
@@ -135,7 +135,7 @@ class KMeans:
         return centres
 
     def creation_clusters(self, X, centres):
-                """
+        """
         Méthode permettant de créer les clusters
         
         Parametres
@@ -161,7 +161,7 @@ class KMeans:
         return clusters
 
     def nouveau_centres(self, clusters, X):
-                """
+        """
         Méthode permettant de calculer les nouveaux centres
         
         Parametres
@@ -183,7 +183,7 @@ class KMeans:
         return centres
 
     def prediction_classe(self, clusters, X):
-                """
+        """
         Méthode permettant d'affecter à chaque individu sa classe
         
         Parametres
@@ -206,7 +206,7 @@ class KMeans:
 
 
     def clustering(self, X):
-                """
+        """
         Méthode permettant de réaliser le K-means en itérant le processus
         
         Parametres

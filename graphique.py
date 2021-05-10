@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import math
 
 class Graphique:
-        """
+    """
     Une classe qui permet la réalisation de graphiques
     
        
@@ -26,7 +26,7 @@ class Graphique:
                     
     """   
     def __init__(self, abscisse, ordonnee, nom_abscisse, nom_ordonnee, titre):
-                """<Constructeur>
+        """<Constructeur>
         Création d'un objet de classe graphique
         
         """
@@ -37,7 +37,7 @@ class Graphique:
         self.titre = titre
         
     def affichage_graphique(self):
-                """
+        """
         Méthode permettant d'afficher un graphique
         
         Parametres

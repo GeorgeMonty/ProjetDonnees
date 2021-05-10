@@ -538,20 +538,13 @@ class Donnees:
                 col_var = i
         liste_jours = []
         liste_deps = []
-        if dep_numReg_Zone == 'dep':
-            liste_deps = ["01","02","03","04","05","06","07","08","09"]
-            for i in range(10,102):
-                liste_deps.append(str(i))
-            liste_deps.append("2A")
-            liste_deps.append("2B")
-        else:
-            for element in data:
-                jour = element[col_jour]
-                dep = element[col_dep]
-                if jour not in liste_jours:
-                    liste_jours.append(jour)
-                if dep not in liste_deps:
-                    liste_deps.append(dep)
+        for element in data:
+            jour = element[col_jour]
+            dep = element[col_dep]
+            if jour not in liste_jours:
+                liste_jours.append(jour)
+            if dep not in liste_deps:
+                liste_deps.append(dep)
         array_numpy = []
         for dep in liste_deps:
             new_ligne = []
