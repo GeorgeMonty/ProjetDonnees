@@ -20,7 +20,7 @@ class KMeans:
     """    
     
     def __init__(self, X, nombre_classe):
-                """<Constructeur>
+        """<Constructeur>
         Création d'un objet Kmeans
         
         Parametres
