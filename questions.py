@@ -39,8 +39,13 @@ print("Nb total d'hospitalisations: " + str(somme))
 #2 Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
 data_hosp_7_jour = data5.fenetrage("2021-02-27","2021-03-03")
 deps = ["01","02","03","04","05","06","07","08","09"]
-for i in range(10,102):
+for i in range(10,96):
     deps.append(str(i))
+deps.append("971")
+deps.append("972")
+deps.append("973")
+deps.append("974")
+deps.append("976")
 deps.append("2A")
 deps.append("2B")
 resultat = {}
@@ -67,10 +72,8 @@ data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-05", "2020-04-11")
 
 x2=stat.moyenne_colonne(data_hosp2)
 
-x
-x2
-
-print(" les moyenne a changer de " + str(x) + " à " + str(x2))
+print("les premiers moyennes :" + str(x))
+print("les deuxième moyennes :" + str(x2))
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
 stat = st.Statistique()
@@ -83,7 +86,7 @@ gliss = stat.moyenne_glissante_tableau(janv, 7)
 kmeans = km.KMeans(np.asarray(gliss), k)
 
 classification = kmeans.clustering(np.asarray(gliss))
-
+classification
 
 #Combien de nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020?
 rean_touss = data5.fenetrage("2020-11-08","2020-11-15")
