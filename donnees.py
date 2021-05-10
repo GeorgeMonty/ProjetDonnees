@@ -15,7 +15,7 @@ class Donnees:
                     .csv  ils sont presentés comme une list des lists et les données sont d'une 
                     fichier .json ils sont presentés comme un dictionnaire des dictionnaires
     
-    varaibles : iterable
+    variables : iterable
                     les variables (les colonnes) de ce jeu des données i.e. le premier ligne
                     des données
                     
@@ -495,7 +495,8 @@ class Donnees:
                
     def fenetrage_numpy(self,var_qual, dep_numReg_Zone,date_debut="00-00-0000",date_fin="99-99-99999"):
         """
-        
+        Retourner un array numpy des values d'un variable qualitative entre deux dates données pour chaque departement,
+        region ou zone academique
 
         Parameters
         ----------
@@ -574,7 +575,8 @@ class Donnees:
         data1.exporter("C:/Users/Documents/.csv")
 
         """
-
+        if self.__type_fichier == "json":
+            raise Exception("On ne peut qu'exporter les données du format csv")
         with open(lien_fichier, 'w', newline='') as csvfile:
             covidwriter = csv.writer(csvfile, delimiter=delimiter,quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for ligne in self.donnees:
