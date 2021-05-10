@@ -14,12 +14,12 @@ import graphique as gr
 
 
 
-data1= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data1.csv').importer()
-data2= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data2.csv').importer()
-data3= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data3.csv').importer()
-data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data4.csv').importer()
-data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
-holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
+data1= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/covid-hospit-incid-reg-2021-03-03-17h20.csv').importer()
+data2= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/donnees-hospitalieres-classe-age-covid19-2021-03-03-17h03.csv').importer()
+data3= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/donnees-hospitalieres-covid19-2021-03-03-17h03.csv').importer()
+data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/donnees-hospitalieres-etablissements-covid19-2021-03-03-17h03.csv').importer()
+data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/donnees-hospitalieres-nouveaux-covid19-2021-03-03-17h03.csv').importer()
+holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/VacancesScolaires.json').importer()
 
 data1.variables
 data2.variables
@@ -31,10 +31,10 @@ data5.variables
 #1 Quel est le nombre total d’hospitalisations dues au Covid-19?
 data_hosp = data5.selection_variables('incid_hosp')
 
-somme = 0
+somme1 = 0
 for elem in data_hosp.donnees[1:]:
-    somme = somme + elem[0]
-print("Nb total d'hospitalisations: " + str(somme))
+    somme1 = somme1 + elem[0]
+print("Nb total d'hospitalisations: " + str(somme1))
 
 #2 Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
 data_hosp_7_jour = data5.fenetrage("2021-02-27","2021-03-03")
@@ -92,10 +92,10 @@ classification
 rean_touss = data5.fenetrage("2020-11-08","2020-11-15")
 rean_touss = rean_touss.selection_variables("incid_rea")
 
-somme = 0
+somme2 = 0
 for elem in rean_touss.donnees[1:]:
-    somme = somme + elem[0]
-print("Il y avait {} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme))
+    somme2 = somme2 + elem[0]
+print("Il y avait {} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme2))
 
 
 
