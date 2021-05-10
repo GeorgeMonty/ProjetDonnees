@@ -3,7 +3,7 @@ import csv
 
 class Donnees:
     """
-    Une classe des jeux des données importer
+    Une classe des jeux des données importés
     
     Vous pouvez utiliser certains fonctions sur les Donnees pour ajouter et effacer certains
     variables et éléments.
@@ -17,6 +17,8 @@ class Donnees:
     
     variables : iterable
                     les variables (les colonnes) de ce jeu des données i.e. le premier ligne
+
+                    les variables (les colonnes) de ce jeu des données i.e. la première lign
                     des données
                     
     __type_fichier : str
