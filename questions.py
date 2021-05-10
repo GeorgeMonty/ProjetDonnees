@@ -28,7 +28,7 @@ data4.variables
 data5.variables
 
 
-#Quel est le nombre total d’hospitalisations dues au Covid-19?
+#1 Quel est le nombre total d’hospitalisations dues au Covid-19?
 data_hosp = data5.selection_variables('incid_hosp')
 
 somme = 0
@@ -36,7 +36,7 @@ for elem in data_hosp.donnees[1:]:
     somme = somme + elem[0]
 print("Nb total d'hospitalisations: " + str(somme))
 
-#Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
+#2 Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
 data_hosp_7_jour = data5.fenetrage("2021-02-27","2021-03-03")
 deps = ["01","02","03","04","05","06","07","08","09"]
 for i in range(10,102):
@@ -53,23 +53,21 @@ for dep in deps:
     resultat[dep] = somme
 resultat   
     
-#Comment évolue la moyenne des nouvelles hospitalisations journalières de cette semaine par rapport à celle de la semaine dernière ? 
+#3 Comment évolue la moyenne des nouvelles hospitalisations journalières de cette semaine par rapport à celle de la semaine dernière ? 
 stat= st.Statistique()
 
-test=data5.fenetrage("2020-03-29", "2020-04-04")
-
-test_hosp = test.selection_variables(["incid_hosp"])
-
-x=stat.moyenne_colonne(test_hosp.donnees[1:])
+data_hosp=data5.fenetrage_numpy("incid_hosp","dep","2020-03-29", "2020-04-04")
 
 
-test2=data5.fenetrage("2020-04-05", "2020-04-12")
+x=stat.moyenne_colonne(data_hosp)
 
-test_hosp2 = test2.selection_variables(["incid_hosp"])
 
-x2=stat.moyenne_colonne(test_hosp2.donnees[1:])
+data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-05", "2020-04-11")
 
-print(" la moyenne a changer de " + str(x[0]) + " à " + str(x2[0]))
+
+x2=stat.moyenne_colonne(data_hosp2)
+
+print(" les moyenne a changer de " + str(x) + " à " + str(x2))
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
 stat = st.Statistique()
