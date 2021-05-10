@@ -21,7 +21,7 @@ class Donnees:
                     les variables (les colonnes) de ce jeu des données i.e. la première lign
                     des données
                     
-    __type_fichier : str
+    type_fichier : str
                     le format du fichier i.e. 'csv' ou 'json'
     
     Exemples
@@ -50,10 +50,10 @@ class Donnees:
         
         """
         self.donnees = donnees
-        self.__type_fichier = type_fichier
-        if self.__type_fichier == 'csv':
+        self.type_fichier = type_fichier
+        if self.type_fichier == 'csv':
             self.variables = self.donnees[0]
-        elif self.__type_fichier == 'json':
+        elif self.type_fichier == 'json':
             self.variables = ['Calendrier', 'Academie']
         else:
             raise Exception("Un objet de la Classe Donnees doit venir d\'un fichier .csv ou .json")
@@ -89,8 +89,8 @@ class Donnees:
         [['jour', 'numReg', 'incid_rea','dc'],['2000-08-29', '01', 44, 12]]
         
         """
-        if self.__type_fichier == 'csv':
-            if donnee2.__type_fichier == 'csv':
+        if self.type_fichier == 'csv':
+            if donnee2.type_fichier == 'csv':
                 step=0
                 data1 = self.donnees
                 data2 = donnee2.donnees
@@ -193,7 +193,7 @@ class Donnees:
         data = list(data)
         date_debut = date_debut.split('-')
         date_fin = date_fin.split('-')
-        variables = data[0]
+        variables = self.variables
         i=0
         for var in variables:
             if var == 'jour':
@@ -246,7 +246,7 @@ class Donnees:
 
         """
         colnums=[]
-        all_variables = self.donnees[0]
+        all_variables = self.variables
         data = []
         
         for i in range(len(all_variables)):
@@ -577,7 +577,7 @@ class Donnees:
         data1.exporter("C:/Users/Documents/.csv")
 
         """
-        if self.__type_fichier == "json":
+        if self.type_fichier == "json":
             raise Exception("On ne peut qu'exporter les données du format csv")
         with open(lien_fichier, 'w', newline='') as csvfile:
             covidwriter = csv.writer(csvfile, delimiter=delimiter,quotechar='|', quoting=csv.QUOTE_MINIMAL)

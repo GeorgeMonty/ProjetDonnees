@@ -8,6 +8,7 @@ data4= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/d
 data5= jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/data5.csv').importer()
 holidays = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/Projet données/code/test2.json').importer()
 
+testing = jd.Jeux_donnees('C:/Users/georg/OneDrive/Documents/GitHub/ProjetDonnees/Bases_de_donnees/VacancesScolaires.json').importer()
 
 test = data1.selection_variables(["jour","numReg","incid_rea"])
 test.exporter("C:/Users/georg/OneDrive/Documents/Projet données/code/test_export.csv")

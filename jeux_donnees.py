@@ -115,5 +115,3 @@ class Jeux_donnees:
         
         else:
             raise Exception("Type de fichier inconnu")
-        
-        

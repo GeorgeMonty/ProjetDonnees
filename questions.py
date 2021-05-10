@@ -67,6 +67,9 @@ data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-05", "2020-04-11")
 
 x2=stat.moyenne_colonne(data_hosp2)
 
+x
+x2
+
 print(" les moyenne a changer de " + str(x) + " à " + str(x2))
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
