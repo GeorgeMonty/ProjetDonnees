@@ -57,17 +57,17 @@ for dep in deps:
         somme = somme + elem[0]
     resultat[dep] = somme
 resultat   
-    
+  
 #3 Comment évolue la moyenne des nouvelles hospitalisations journalières de cette semaine par rapport à celle de la semaine dernière ? 
 stat= st.Statistique()
 
-data_hosp=data5.fenetrage_numpy("incid_hosp","dep","2020-03-29", "2020-04-04")
+data_hosp=data5.fenetrage_numpy("incid_hosp","dep","2020-03-30", "2020-04-05")
 
 
 x=stat.moyenne_colonne(data_hosp)
 
 
-data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-05", "2020-04-11")
+data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-06", "2020-04-12")
 
 
 x2=stat.moyenne_colonne(data_hosp2)
