@@ -95,7 +95,7 @@ rean_touss = rean_touss.selection_variables("incid_rea")
 somme2 = 0
 for elem in rean_touss.donnees[1:]:
     somme2 = somme2 + elem[0]
-print("Il y avait {} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme2))
+print("{} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme2))
 
 
 
