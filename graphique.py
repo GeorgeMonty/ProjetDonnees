@@ -22,10 +22,13 @@ class Graphique:
         Nom de l'axe des ordonnées
         
     titre : str
-        Titre du graphique         
+        Titre du graphique 
+    
+    legende : str
+        Légende de la courbe
                     
     """   
-    def __init__(self, abscisse, ordonnee, nom_abscisse, nom_ordonnee, titre):
+    def __init__(self, abscisse, ordonnee, nom_abscisse, nom_ordonnee, titre, legende):
         """<Constructeur>
         Création d'un objet de classe graphique
         
@@ -35,6 +38,7 @@ class Graphique:
         self.nom_abscisse = nom_abscisse
         self.nom_ordonnee = nom_ordonnee
         self.titre = titre
+        self.legende = legende
         
     def affichage_graphique(self):
         """
@@ -48,8 +52,9 @@ class Graphique:
         -------
         Graphique de la série temporelle désirée
         """ 
-        plt.plot(self.abscisse, self.ordonnee)
+        plt.plot(self.abscisse, self.ordonnee, label = self.legende)
         plt.title(self.titre)
         plt.xlabel(self.nom_abscisse)
         plt.ylabel(self.nom_ordonnee)
+        plt.legend()
     
