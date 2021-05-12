@@ -36,6 +36,8 @@ for elem in data_hosp.donnees[1:]:
     somme1 = somme1 + elem[0]
 print("Nb total d'hospitalisations: " + str(somme1))
 
+cum_hosp=data5.fenetrage_numpy('incid_hosp', 'dep','0000-00-00','99999-99-99')
+
 #2 Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
 data_hosp_7_jour = data5.fenetrage("2021-02-27","2021-03-03")
 deps = ["01","02","03","04","05","06","07","08","09"]
