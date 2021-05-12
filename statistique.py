@@ -48,7 +48,7 @@ class Statistique:
         somme = 0
         effectif = len(X)
         for i in range(effectif):
-            somme = somme + (X[i] - moyenne(X))**2
+            somme = somme + (X[i] - self.moyenne(X))**2
         variance = somme / effectif
         return variance
     
@@ -65,7 +65,7 @@ class Statistique:
         Ecart-type: integer
             L'écart-type de la liste
         """ 
-        return (variance(X)**1/2)  
+        return (self.variance(X)**1/2)  
         
     def centrage(self, X):
         """
@@ -80,7 +80,7 @@ class Statistique:
         liste_centree: liste
             La liste centrée obtenue à partir d'une liste quelconque
         """ 
-        moyen = moyenne(self, X)
+        moyen = self.moyenne(X)
         liste_centree = X
         for i in range(len(X)):
             liste_centree[i] = X[i] - moyen
@@ -99,8 +99,8 @@ class Statistique:
         centree_reduite: liste
             La liste normalisée obtenue à partir d'une liste quelconque
         """ 
-        ecart = ecart_type(X)
-        centree = centrage(X)
+        ecart = self.ecart_type(X)
+        centree = self.centrage(X)
         centree_reduite = X
         for i in range(len(X)):
             centree_reduite[i] = centree[i] / ecart
