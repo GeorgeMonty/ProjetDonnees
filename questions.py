@@ -117,8 +117,20 @@ print("nb d'hommes décédés: " + str(sommeh) + " ; nb de femmes décédés: " 
 #Afficher un graphique du nombre moyen par région de nouvelles admissions en réanimation pendant le mois de Janvier 2021.
 stat=st.Statistique()
 x=data1.fenetrage_numpy('incid_rea','numReg',date_debut="2021-01-01",date_fin="2021-01-31")
+gliss2 = np.asarray(stat.moyenne_glissante_tableau(x, 7))
 x=stat.moyenne_colonne(x)
-
 graph = gr.Graphique(range(1,32),x, "jour", "incid_rea", "Nombre moyen par région de nouvelles admissions en réanimation")
 graph.affichage_graphique()
+
+moyennes_gliss = stat.moyenne_colonne(gliss2)
+graph2 = gr.Graphique(range(1,26),moyennes_gliss, "index", "incid_rea moyenne glissante", "")
+graph2.affichage_graphique()
+
+
+
+
+
+
+
+
 
