@@ -112,3 +112,13 @@ for i in range(len(data_decH.donnees[1:])):
     sommeh = sommeh + data_decH.donnees[1:][i][0]
     sommef = sommef + data_decF.donnees[1:][i][0]
 print("nb d'hommes décédés: " + str(sommeh) + " ; nb de femmes décédés: " + str(sommef))
+
+
+#Afficher un graphique du nombre moyen par région de nouvelles admissions en réanimation pendant le mois de Janvier 2021.
+stat=st.Statistique()
+x=data1.fenetrage_numpy('incid_rea','numReg',date_debut="2021-01-01",date_fin="2021-01-31")
+x=stat.moyenne_colonne(x)
+
+graph = gr.Graphique(range(1,32),x, "jour", "incid_rea", "Nombre moyen par région de nouvelles admissions en réanimation")
+graph.affichage_graphique()
+
