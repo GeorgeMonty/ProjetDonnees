@@ -6,7 +6,6 @@ Created on Fri May  7 13:37:20 2021
 """
 import jeux_donnees as jd
 import numpy as np
-import donnees as dn
 import kmeans as km
 import statistique as st
 import graphique as gr
@@ -97,7 +96,19 @@ for elem in rean_touss.donnees[1:]:
     somme2 = somme2 + elem[0]
 print("{} nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020".format(somme2))
 
+#Combien des hommes et des femmes totals sont mort dues au Covid-19 dès que le 29 août 2020 ?
+data29aout = data3.fenetrage("2020-08-29","2020-08-29")
+
+datahomme = data29aout.choisir_sexe('homme')
+datafemme = data29aout.choisir_sexe('femme')
 
 
+data_decH = datahomme.selection_variables('dc')
+data_decF = datafemme.selection_variables('dc')
 
-
+sommeh = 0
+sommef = 0
+for i in range(len(data_decH.donnees[1:])):
+    sommeh = sommeh + data_decH.donnees[1:][i][0]
+    sommef = sommef + data_decF.donnees[1:][i][0]
+print("nb d'hommes décédés: " + str(sommeh) + " ; nb de femmes décédés: " + str(sommef))
