@@ -75,17 +75,13 @@ print("les premiers moyennes :" + str(x))
 print("les deuxième moyennes :" + str(x2))
 
 graphique1 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x, "Jour de la semaine", "Moyenne des nouvelles hospitalisations", 
-                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-03-30 et 2020-04-05")
-graphique1.affichage_graphique()
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines")
 
-graphique2 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x2, "Jour de la semaine", "Moyenne des nouvelles hospitalisations",
-                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-04-06 et 2020-04-12")
+graphique2 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x2, "Jour de la semaine","Moyenne des nouvelles hospitalisations", 
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines" )
+graphique1.affichage_graphique()
 graphique2.affichage_graphique()
 plt.show()
-
-graphique3 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], [x,x2], "Jour de la semaine", "Moyenne des nouvelles hospitalisations",
-                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-04-06 et 2020-04-12")
-graphique3.affichage_graphique()
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
 stat = st.Statistique()
@@ -134,10 +130,11 @@ gliss2 = np.asarray(stat.moyenne_glissante_tableau(x, 7))
 x=stat.moyenne_colonne(x)
 graph = gr.Graphique(range(1,32),x, "jour", "incid_rea", "Nombre moyen par région de nouvelles admissions en réanimation")
 graph.affichage_graphique()
-
+plt.show()
 moyennes_gliss = stat.moyenne_colonne(gliss2)
 graph2 = gr.Graphique(range(1,26),moyennes_gliss, "index", "incid_rea moyenne glissante", "")
 graph2.affichage_graphique()
+plt.show()
 
 
 
