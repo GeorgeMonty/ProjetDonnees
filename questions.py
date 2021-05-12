@@ -75,10 +75,10 @@ print("les premiers moyennes :" + str(x))
 print("les deuxième moyennes :" + str(x2))
 
 graphique1 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x, "Jour de la semaine", "Moyenne des nouvelles hospitalisations", 
-                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines")
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines", "Première Semaine")
 
 graphique2 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x2, "Jour de la semaine","Moyenne des nouvelles hospitalisations", 
-                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines" )
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre deux semaines", "Deuxième Semaine" )
 graphique1.affichage_graphique()
 graphique2.affichage_graphique()
 plt.show()

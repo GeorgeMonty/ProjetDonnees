@@ -28,7 +28,7 @@ class Graphique:
         Légende de la courbe
                     
     """   
-    def __init__(self, abscisse, ordonnee, nom_abscisse, nom_ordonnee, titre, legende):
+    def __init__(self, abscisse, ordonnee, nom_abscisse, nom_ordonnee, titre, legende=None):
         """<Constructeur>
         Création d'un objet de classe graphique
         
