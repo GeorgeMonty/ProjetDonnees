@@ -9,6 +9,7 @@ import numpy as np
 import kmeans as km
 import statistique as st
 import graphique as gr
+import matplotlib.pyplot as plt
 
 
 
@@ -65,14 +66,26 @@ data_hosp=data5.fenetrage_numpy("incid_hosp","dep","2020-03-30", "2020-04-05")
 
 x=stat.moyenne_colonne(data_hosp)
 
-
 data_hosp2=data5.fenetrage_numpy("incid_hosp","dep","2020-04-06", "2020-04-12")
-
-
 x2=stat.moyenne_colonne(data_hosp2)
+
+
 
 print("les premiers moyennes :" + str(x))
 print("les deuxième moyennes :" + str(x2))
+
+graphique1 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x, "Jour de la semaine", "Moyenne des nouvelles hospitalisations", 
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-03-30 et 2020-04-05")
+graphique1.affichage_graphique()
+
+graphique2 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], x2, "Jour de la semaine", "Moyenne des nouvelles hospitalisations",
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-04-06 et 2020-04-12")
+graphique2.affichage_graphique()
+plt.show()
+
+graphique3 = gr.Graphique(['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], [x,x2], "Jour de la semaine", "Moyenne des nouvelles hospitalisations",
+                          "L'évolution de la moyenne des nouvelles hospitalisations journalières entre 2020-04-06 et 2020-04-12")
+graphique3.affichage_graphique()
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
 stat = st.Statistique()

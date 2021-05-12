@@ -51,6 +51,5 @@ class Graphique:
         plt.plot(self.abscisse, self.ordonnee, 'r')
         plt.title(self.titre)
         plt.xlabel(self.nom_abscisse)
-        plt.ylabel(self.nom_ordonnee) 
-        plt.show()   
+        plt.ylabel(self.nom_ordonnee)
     
