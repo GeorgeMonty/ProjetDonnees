@@ -90,6 +90,7 @@ graphique2.affichage_graphique()
 plt.show()
 
 #Quel est le résultat de k-means avec k = 3 sur les données des départements du mois de Janvier 2021, lissées avec une moyenne glissante de 7 jours?
+from carte import CartoPlot
 stat = st.Statistique()
 k=3
 
@@ -101,6 +102,11 @@ kmeans = km.KMeans(np.asarray(gliss), k)
 
 classification = kmeans.clustering(np.asarray(gliss))
 classification
+
+cp = CartoPlot()
+d = cp.dictionnaire_dep(classification)
+fig = cp.plot_dep_map(data=d,x_lim=(-6,10), y_lim=(41,52))
+fig.savefig('C:/Users/georg/OneDrive/Documents/GitHub/projetDonnees/Graphiques/departements.test.jpg')
 
 #Combien de nouvelles admissions en réanimation ont eu lieu pendant la semaine suivant les vacances de la Toussaint de 2020?
 rean_touss = data5.fenetrage("2020-11-08","2020-11-15")
