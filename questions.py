@@ -101,7 +101,7 @@ gliss = stat.moyenne_glissante_tableau(janv, 7)
 kmeans = km.KMeans(np.asarray(gliss), k)
 
 classification = kmeans.clustering(np.asarray(gliss))
-classification
+
 
 cp = CartoPlot()
 d = cp.dictionnaire_dep(classification)
