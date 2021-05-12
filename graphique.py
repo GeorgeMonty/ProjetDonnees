@@ -48,7 +48,7 @@ class Graphique:
         -------
         Graphique de la série temporelle désirée
         """ 
-        plt.plot(self.abscisse, self.ordonnee, 'r')
+        plt.plot(self.abscisse, self.ordonnee)
         plt.title(self.titre)
         plt.xlabel(self.nom_abscisse)
         plt.ylabel(self.nom_ordonnee)
