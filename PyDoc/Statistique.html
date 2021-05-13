@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: class Statistique</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Statistique">class <strong>Statistique</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Une&nbsp;classe&nbsp;qui&nbsp;permet&nbsp;la&nbsp;réalisation&nbsp;de&nbsp;calculs&nbsp;statistiques&nbsp;variées<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;<br>
+Attributs<br>
+---------<br>
+None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Statistique-centrage"><strong>centrage</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;centrer&nbsp;une&nbsp;liste<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+liste_centree:&nbsp;liste<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;liste&nbsp;centrée&nbsp;obtenue&nbsp;à&nbsp;partir&nbsp;d'une&nbsp;liste&nbsp;quelconque</tt></dd></dl>
+
+<dl><dt><a name="Statistique-centrage_tableau"><strong>centrage_tableau</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;centrer&nbsp;un&nbsp;tableau&nbsp;(matrice)<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+table_centree:&nbsp;liste<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;table&nbsp;centrée&nbsp;obtenue&nbsp;à&nbsp;partir&nbsp;d'une&nbsp;table&nbsp;quelconque</tt></dd></dl>
+
+<dl><dt><a name="Statistique-ecart_type"><strong>ecart_type</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;l'écart-type&nbsp;d'une&nbsp;liste&nbsp;Python<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Ecart-type:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;L'écart-type&nbsp;de&nbsp;la&nbsp;liste</tt></dd></dl>
+
+<dl><dt><a name="Statistique-moyenne"><strong>moyenne</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;moyenne&nbsp;d'une&nbsp;liste&nbsp;Python<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Moyenne:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;moyenne&nbsp;de&nbsp;la&nbsp;liste</tt></dd></dl>
+
+<dl><dt><a name="Statistique-moyenne_colonne"><strong>moyenne_colonne</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;moyenne&nbsp;suivant&nbsp;les&nbsp;colonnes&nbsp;d'une&nbsp;liste&nbsp;de&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;liste<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;liste&nbsp;de&nbsp;liste&nbsp;(équivalent&nbsp;d'une&nbsp;matrice)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Moyenne:&nbsp;array&nbsp;numpy<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;liste&nbsp;des&nbsp;moyennes&nbsp;suivant&nbsp;les&nbsp;colonnes</tt></dd></dl>
+
+<dl><dt><a name="Statistique-moyenne_glissante_tableau"><strong>moyenne_glissante_tableau</strong></a>(self, X, fenetre)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;moyenne&nbsp;mobile&nbsp;d'une&nbsp;matrice<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+fenetre:&nbsp;int&nbsp;(fenetrage&nbsp;de&nbsp;la&nbsp;moyenne&nbsp;glissante)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Moyenne_mobile:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;moyenne&nbsp;mobile&nbsp;d'une&nbsp;matrice</tt></dd></dl>
+
+<dl><dt><a name="Statistique-moyenne_ligne"><strong>moyenne_ligne</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;moyenne&nbsp;suivant&nbsp;les&nbsp;lignes&nbsp;d'une&nbsp;liste&nbsp;de&nbsp;liste<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;liste&nbsp;de&nbsp;liste&nbsp;(équivalent&nbsp;d'une&nbsp;matrice)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Moyenne:&nbsp;array&nbsp;numpy<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;liste&nbsp;des&nbsp;moyennes&nbsp;suivant&nbsp;les&nbsp;lignes</tt></dd></dl>
+
+<dl><dt><a name="Statistique-moyenne_mobile"><strong>moyenne_mobile</strong></a>(self, X, fenetre)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;moyenne&nbsp;mobile&nbsp;d'une&nbsp;liste&nbsp;Python<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+fenetre:&nbsp;int&nbsp;(fenetrage&nbsp;de&nbsp;la&nbsp;moyenne&nbsp;glissante)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Moyenne_mobile:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;moyenne&nbsp;mobile&nbsp;d'une&nbsp;liste</tt></dd></dl>
+
+<dl><dt><a name="Statistique-normalisation"><strong>normalisation</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;normaliser&nbsp;une&nbsp;liste<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+centree_reduite:&nbsp;liste<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;liste&nbsp;normalisée&nbsp;obtenue&nbsp;à&nbsp;partir&nbsp;d'une&nbsp;liste&nbsp;quelconque</tt></dd></dl>
+
+<dl><dt><a name="Statistique-normalisation_tableau"><strong>normalisation_tableau</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;normaliser&nbsp;un&nbsp;tableau&nbsp;(matrice)<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+table_centree_reduite:&nbsp;liste<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;table&nbsp;normalisée&nbsp;obtenue&nbsp;à&nbsp;partir&nbsp;d'une&nbsp;table&nbsp;quelconque</tt></dd></dl>
+
+<dl><dt><a name="Statistique-variance"><strong>variance</strong></a>(self, X)</dt><dd><tt>Méthode&nbsp;permettant&nbsp;de&nbsp;calculer&nbsp;la&nbsp;variance&nbsp;d'une&nbsp;liste&nbsp;Python<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+X:&nbsp;list<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Variance:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La&nbsp;variance&nbsp;de&nbsp;la&nbsp;liste</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table>
+</body></html>
